@@ -1,0 +1,56 @@
+import type { Dictionary } from './types';
+
+export const es: Dictionary = {
+  nav: {
+    chat: 'Chat',
+    contacts: 'Contactos',
+    quotes: 'Cotizaciones',
+    more: 'Más',
+  },
+  chat: {
+    placeholder: 'Escribe un mensaje...',
+    send: 'Enviar',
+    stop: 'Detener',
+    voiceHint: 'Mantén presionado para grabar',
+    credits: 'créditos',
+    newChat: 'Nueva conversación',
+    agentPicker: 'Elegir agente',
+  },
+  contacts: {
+    title: 'Contactos',
+    search: 'Buscar contactos...',
+    add: 'Agregar contacto',
+    empty: 'Sin contactos aún. Agrega tu primer contacto.',
+    call: 'Llamar',
+    whatsapp: 'WhatsApp',
+  },
+  quotes: {
+    title: 'Cotizaciones',
+    create: 'Crear cotización',
+    search: 'Buscar cotizaciones...',
+    empty: 'Sin cotizaciones. Crea tu primera cotización.',
+    draft: 'Borrador',
+    sent: 'Enviada',
+    accepted: 'Aceptada',
+    rejected: 'Rechazada',
+  },
+  common: {
+    loading: 'Cargando...',
+    error: 'Ocurrió un error',
+    retry: 'Reintentar',
+    cancel: 'Cancelar',
+    save: 'Guardar',
+    delete: 'Eliminar',
+    back: 'Volver',
+    offline: 'Sin conexión — modo offline',
+    install: 'Instalar KitZ',
+    installHint: 'Agrega KitZ a tu pantalla de inicio para acceso rápido',
+  },
+  auth: {
+    login: 'Iniciar sesión',
+    email: 'Correo electrónico',
+    otp: 'Código de verificación',
+    verifyCode: 'Verificar código',
+    logout: 'Cerrar sesión',
+  },
+};

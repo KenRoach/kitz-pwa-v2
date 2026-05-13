@@ -1,0 +1,607 @@
+/* ── KitZ PWA v2 — Design Tokens ───────────────────────────────── */
+:root {
+  --color-bg: #FDFBF6;
+  --color-surface: #F5F0E5;
+  --color-border: #D9D2BF;
+  --color-text: #1A1A1A;
+  --color-text-secondary: #6E6A62;
+  --color-accent: #C9A96E;
+  --color-primary: #1A1A1A;
+  --color-primary-text: #FDFBF6;
+  --color-error: #DC2626;
+  --color-success: #10B981;
+
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif: Georgia, 'Cormorant Garamond', serif;
+
+  --radius: 8px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  --nav-height: 56px;
+  --header-height: 48px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+input, button, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ── App Shell ─────────────────────────────────────────────────── */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Bottom Nav ────────────────────────────────────────────────── */
+.bottom-nav {
+  display: flex;
+  height: var(--nav-height);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.bottom-nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  transition: color 150ms;
+}
+
+.bottom-nav-tab.active {
+  color: var(--color-text);
+}
+
+.bottom-nav-icon {
+  font-size: 20px;
+}
+
+.bottom-nav-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Offline Banner ────────────────────────────────────────────── */
+.offline-banner {
+  background: var(--color-error);
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  padding: var(--space-xs) var(--space-md);
+}
+
+/* ── Page Header ───────────────────────────────────────────────── */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  height: var(--header-height);
+}
+
+.page-header h1 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ── Chat ──────────────────────────────────────────────────────── */
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.chat-header h1 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+}
+
+.chat-credits {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.chat-bubble {
+  max-width: 85%;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius);
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+}
+
+.chat-bubble.assistant {
+  align-self: flex-start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.chat-input-area {
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-sm) var(--space-md);
+  padding-bottom: max(var(--space-sm), env(safe-area-inset-bottom, 0));
+  background: var(--color-bg);
+}
+
+.chat-input-row {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.chat-input {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 16px; /* prevent iOS zoom */
+  background: var(--color-surface);
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: var(--color-accent);
+}
+
+.chat-attach-btn,
+.chat-send-btn,
+.chat-stop-btn {
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.chat-attach-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.chat-send-btn {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+}
+
+.chat-send-btn:disabled {
+  opacity: 0.3;
+}
+
+.chat-stop-btn {
+  background: var(--color-error);
+  color: white;
+}
+
+/* ── Search Bar ────────────────────────────────────────────────── */
+.search-bar {
+  padding: 0 var(--space-md) var(--space-md);
+}
+
+.search-input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 16px;
+  background: var(--color-surface);
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: var(--color-accent);
+}
+
+/* ── Contact List ──────────────────────────────────────────────── */
+.contact-list {
+  padding: 0 var(--space-md);
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.contact-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.contact-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.contact-company {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.contact-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.action-btn {
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* ── Quote List ────────────────────────────────────────────────── */
+.filter-chips {
+  display: flex;
+  gap: var(--space-xs);
+  padding: 0 var(--space-md) var(--space-md);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chip {
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: var(--space-xs) var(--space-md);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.chip.active {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  border-color: var(--color-primary);
+}
+
+.quote-list {
+  padding: 0 var(--space-md);
+}
+
+.quote-item {
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.quote-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+.quote-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.quote-status {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quote-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.quote-total {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ── More Page ─────────────────────────────────────────────────── */
+.more-page {
+  padding-bottom: var(--space-xl);
+}
+
+.menu-list {
+  padding: var(--space-md);
+}
+
+.menu-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  font-size: 15px;
+}
+
+.menu-icon {
+  font-size: 20px;
+  width: 28px;
+  text-align: center;
+}
+
+.locale-switcher {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  justify-content: center;
+}
+
+.locale-btn {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 13px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.locale-btn.active {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  border-color: var(--color-primary);
+}
+
+.logout-btn {
+  display: block;
+  margin: var(--space-lg) auto;
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
+  background: transparent;
+  border-radius: var(--radius);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+/* ── Login ─────────────────────────────────────────────────────── */
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-lg);
+  background: var(--color-bg);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  padding: var(--space-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.login-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+}
+
+.logo-mark {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.login-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.login-input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  padding: var(--space-md);
+  font-size: 16px;
+  background: var(--color-bg);
+  margin-bottom: var(--space-md);
+  outline: none;
+}
+
+.login-input:focus {
+  border-color: var(--color-accent);
+}
+
+.otp-input {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  letter-spacing: 8px;
+}
+
+.otp-hint {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.login-error {
+  color: var(--color-error);
+  font-size: 13px;
+  text-align: center;
+  margin-top: var(--space-md);
+}
+
+/* ── Buttons ───────────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  border: none;
+  padding: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  display: block;
+  margin: var(--space-md) auto 0;
+}
+
+.fab-add {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Empty State ───────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: var(--space-xl) var(--space-md);
+  color: var(--color-text-secondary);
+}
+
+.empty-state p {
+  margin-bottom: var(--space-md);
+}
+
+.loading {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+/* ── Quota Bar ─────────────────────────────────────────────────── */
+.chat-quota-bar {
+  height: 3px;
+  background: var(--color-border);
+  margin-bottom: var(--space-sm);
+  border-radius: 2px;
+  overflow: hidden;
+}
