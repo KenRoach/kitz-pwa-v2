@@ -31,9 +31,13 @@ export function ChatPage() {
     abortRef.current = new AbortController();
 
     try {
+      const history = messages
+        .filter((m) => m.content)
+        .map((m) => ({ role: m.role, content: m.content }));
+
       await apiStream(
         '/api/chat',
-        { message: text },
+        { message: text, history },
         (chunk) => {
           setMessages((prev) =>
             prev.map((m) => (m.id === assistantId ? { ...m, content: m.content + chunk } : m)),

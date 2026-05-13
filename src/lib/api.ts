@@ -16,9 +16,17 @@ class ApiError extends Error {
 }
 
 function getAuthHeaders(): Record<string, string> {
+  const headers: Record<string, string> = {};
   const token = localStorage.getItem('kitz-token');
-  if (!token) return {};
-  return { Authorization: `Bearer ${token}` };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const userJson = localStorage.getItem('kitz-user');
+  if (userJson) {
+    try {
+      const user = JSON.parse(userJson) as { id: string };
+      if (user.id) headers['x-kitz-user-id'] = user.id;
+    } catch { /* ignore */ }
+  }
+  return headers;
 }
 
 export async function api<T>(path: string, options: ApiOptions = {}): Promise<T> {
@@ -38,7 +46,10 @@ export async function api<T>(path: string, options: ApiOptions = {}): Promise<T>
   });
 
   if (!res.ok) {
-    if (res.status === 401) {
+    // Auth endpoints return 401 for invalid codes — don't redirect, let caller handle
+    const isAuthEndpoint = path.startsWith('/api/auth/');
+
+    if (res.status === 401 && !isAuthEndpoint) {
       localStorage.removeItem('kitz-token');
       localStorage.removeItem('kitz-user');
       window.location.href = '/login';
@@ -49,6 +60,13 @@ export async function api<T>(path: string, options: ApiOptions = {}): Promise<T>
     }
     if (res.status >= 500) {
       throw new ApiError(res.status, 'Server error');
+    }
+    // For auth endpoints, try to parse the JSON error from backend
+    if (isAuthEndpoint) {
+      const json = await res.json().catch(() => null) as { success?: boolean; error?: { message?: string } } | null;
+      if (json && !json.success) {
+        return json as T;
+      }
     }
     const text = await res.text().catch(() => 'Unknown error');
     const sanitized = text.length > 200 ? text.slice(0, 200) : text;
