@@ -38,22 +38,31 @@ export function LoginPage() {
     setLoading(true);
     setError('');
     try {
-      const res = await api<{ success: boolean; user?: { id: string; email: string; name: string; tenantId: string; role: string }; error?: { message: string } }>(
-        '/api/auth/email-otp/verify',
-        { method: 'POST', body: { email: email.trim(), otp: code.trim() } },
-      );
+      const res = await api<{
+        success: boolean;
+        data?: { userId: string; email: string };
+        error?: { code: string; message: string };
+      }>('/api/auth/email-otp/verify', {
+        method: 'POST',
+        body: { email: email.trim(), otp: code.trim() },
+      });
       if (!res.success) {
         setError(res.error?.message ?? dict.common.error);
         return;
       }
-      // Session is set via cookies by the backend — fetch user profile
-      const sessionRes = await api<{ session: { user: { id: string; email: string; name: string; tenantId: string; role: string } } | null }>(
-        '/api/auth/session',
-      ).catch(() => null);
-      if (sessionRes?.session?.user) {
-        localStorage.setItem('kitz-token', 'cookie-session');
-        setUser(sessionRes.session.user);
-      }
+      // OTP verified — backend confirmed identity.
+      // Cookies are set on kitz.services domain (upstream), so we store
+      // the verified user info locally for the PWA session.
+      const verifiedUser = {
+        id: res.data?.userId ?? '',
+        email: res.data?.email ?? email.trim(),
+        name: email.split('@')[0],
+        tenantId: '',
+        role: 'owner',
+      };
+      localStorage.setItem('kitz-token', 'verified');
+      localStorage.setItem('kitz-user', JSON.stringify(verifiedUser));
+      setUser(verifiedUser);
       navigate('/chat');
     } catch {
       setError(dict.common.error);

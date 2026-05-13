@@ -35,6 +35,7 @@ export function MorePage() {
 
   const handleLogout = () => {
     localStorage.removeItem('kitz-token');
+    localStorage.removeItem('kitz-user');
     setUser(null);
     navigate('/login');
   };

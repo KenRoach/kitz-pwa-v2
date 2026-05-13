@@ -53,18 +53,18 @@ function SessionLoader() {
   useEffect(() => {
     const token = localStorage.getItem('kitz-token');
     if (token && !user) {
-      api<{ session: { user: SessionUser } | null }>('/api/auth/session')
-        .then((res) => {
-          if (res.session?.user) setUser(res.session.user);
-          else {
-            localStorage.removeItem('kitz-token');
-            setUser(null);
-          }
-        })
-        .catch(() => {
+      // Restore user from localStorage (PWA stores verified identity locally)
+      const stored = localStorage.getItem('kitz-user');
+      if (stored) {
+        try {
+          setUser(JSON.parse(stored) as SessionUser);
+        } catch {
           localStorage.removeItem('kitz-token');
-          setUser(null);
-        });
+          localStorage.removeItem('kitz-user');
+        }
+      } else {
+        localStorage.removeItem('kitz-token');
+      }
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

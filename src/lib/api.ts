@@ -40,6 +40,7 @@ export async function api<T>(path: string, options: ApiOptions = {}): Promise<T>
   if (!res.ok) {
     if (res.status === 401) {
       localStorage.removeItem('kitz-token');
+      localStorage.removeItem('kitz-user');
       window.location.href = '/login';
       throw new ApiError(401, 'Unauthorized');
     }
@@ -78,6 +79,7 @@ export async function apiStream(
   if (!res.ok || !res.body) {
     if (res.status === 401) {
       localStorage.removeItem('kitz-token');
+      localStorage.removeItem('kitz-user');
       window.location.href = '/login';
       throw new ApiError(401, 'Unauthorized');
     }
