@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useAppStore } from '@/lib/store';
+import { api } from '@/lib/api';
+import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
+import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { AppShell } from '@/components/layout/AppShell';
 import { ChatPage } from '@/pages/ChatPage';
 import { ContactsPage } from '@/pages/ContactsPage';
@@ -17,6 +20,14 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+interface SessionUser {
+  id: string;
+  email: string;
+  name: string;
+  tenantId: string;
+  role: string;
+}
 
 function OnlineListener() {
   const setOnline = useAppStore((s) => s.setOnline);
@@ -35,22 +46,46 @@ function OnlineListener() {
   return null;
 }
 
+function SessionLoader() {
+  const user = useAppStore((s) => s.user);
+  const setUser = useAppStore((s) => s.setUser);
+
+  useEffect(() => {
+    const token = localStorage.getItem('kitz-token');
+    if (token && !user) {
+      api<SessionUser>('/api/auth/session')
+        .then((sessionUser) => {
+          setUser(sessionUser);
+        })
+        .catch(() => {
+          localStorage.removeItem('kitz-token');
+          setUser(null);
+        });
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return null;
+}
+
 export function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <OnlineListener />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route element={<AppShell />}>
-            <Route path="/chat" element={<ChatPage />} />
-            <Route path="/contacts" element={<ContactsPage />} />
-            <Route path="/quotes" element={<QuotesPage />} />
-            <Route path="/more" element={<MorePage />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/chat" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <OnlineListener />
+          <SessionLoader />
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
+              <Route path="/chat" element={<ChatPage />} />
+              <Route path="/contacts" element={<ContactsPage />} />
+              <Route path="/quotes" element={<QuotesPage />} />
+              <Route path="/more" element={<MorePage />} />
+            </Route>
+            <Route path="*" element={<Navigate to="/chat" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }

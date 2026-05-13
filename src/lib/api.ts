@@ -38,8 +38,20 @@ export async function api<T>(path: string, options: ApiOptions = {}): Promise<T>
   });
 
   if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('kitz-token');
+      window.location.href = '/login';
+      throw new ApiError(401, 'Unauthorized');
+    }
+    if (res.status === 403) {
+      throw new ApiError(403, 'Forbidden');
+    }
+    if (res.status >= 500) {
+      throw new ApiError(res.status, 'Server error');
+    }
     const text = await res.text().catch(() => 'Unknown error');
-    throw new ApiError(res.status, text);
+    const sanitized = text.length > 200 ? text.slice(0, 200) : text;
+    throw new ApiError(res.status, sanitized);
   }
 
   return res.json() as Promise<T>;
@@ -64,6 +76,11 @@ export async function apiStream(
   });
 
   if (!res.ok || !res.body) {
+    if (res.status === 401) {
+      localStorage.removeItem('kitz-token');
+      window.location.href = '/login';
+      throw new ApiError(401, 'Unauthorized');
+    }
     throw new ApiError(res.status, 'Stream failed');
   }
 

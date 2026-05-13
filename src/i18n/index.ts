@@ -25,7 +25,7 @@ export function detectLocale(): Locale {
 
 export function setLocale(locale: Locale): void {
   localStorage.setItem(LOCALE_KEY, locale);
-  document.cookie = `kitz-locale=${locale};path=/;max-age=31536000`;
+  document.cookie = `kitz-locale=${locale};path=/;max-age=31536000;SameSite=Lax`;
 }
 
 export function getDictionary(locale: Locale): Dictionary {

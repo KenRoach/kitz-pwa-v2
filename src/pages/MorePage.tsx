@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/lib/store';
 import type { Locale } from '@/i18n/types';
 
@@ -26,9 +27,17 @@ const LABELS: Record<string, Record<Locale, string>> = {
 };
 
 export function MorePage() {
+  const navigate = useNavigate();
   const locale = useAppStore((s) => s.locale);
   const dict = useAppStore((s) => s.dict);
   const setLocale = useAppStore((s) => s.setLocale);
+  const setUser = useAppStore((s) => s.setUser);
+
+  const handleLogout = () => {
+    localStorage.removeItem('kitz-token');
+    setUser(null);
+    navigate('/login');
+  };
 
   return (
     <div className="more-page">
@@ -60,7 +69,7 @@ export function MorePage() {
         ))}
       </div>
 
-      <button className="logout-btn" type="button">
+      <button className="logout-btn" type="button" onClick={handleLogout}>
         {dict.auth.logout}
       </button>
     </div>
