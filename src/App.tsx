@@ -53,9 +53,13 @@ function SessionLoader() {
   useEffect(() => {
     const token = localStorage.getItem('kitz-token');
     if (token && !user) {
-      api<SessionUser>('/api/auth/session')
-        .then((sessionUser) => {
-          setUser(sessionUser);
+      api<{ session: { user: SessionUser } | null }>('/api/auth/session')
+        .then((res) => {
+          if (res.session?.user) setUser(res.session.user);
+          else {
+            localStorage.removeItem('kitz-token');
+            setUser(null);
+          }
         })
         .catch(() => {
           localStorage.removeItem('kitz-token');

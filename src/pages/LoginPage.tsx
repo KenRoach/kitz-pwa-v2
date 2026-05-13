@@ -38,12 +38,22 @@ export function LoginPage() {
     setLoading(true);
     setError('');
     try {
-      const res = await api<{ user: { id: string; email: string; name: string; tenantId: string; role: string }; token: string }>(
-        '/api/auth/verify-otp',
-        { method: 'POST', body: { email: email.trim(), code: code.trim() } },
+      const res = await api<{ success: boolean; user?: { id: string; email: string; name: string; tenantId: string; role: string }; error?: { message: string } }>(
+        '/api/auth/email-otp/verify',
+        { method: 'POST', body: { email: email.trim(), otp: code.trim() } },
       );
-      localStorage.setItem('kitz-token', res.token);
-      setUser(res.user);
+      if (!res.success) {
+        setError(res.error?.message ?? dict.common.error);
+        return;
+      }
+      // Session is set via cookies by the backend — fetch user profile
+      const sessionRes = await api<{ session: { user: { id: string; email: string; name: string; tenantId: string; role: string } } | null }>(
+        '/api/auth/session',
+      ).catch(() => null);
+      if (sessionRes?.session?.user) {
+        localStorage.setItem('kitz-token', 'cookie-session');
+        setUser(sessionRes.session.user);
+      }
       navigate('/chat');
     } catch {
       setError(dict.common.error);
