@@ -4,8 +4,7 @@ export interface Dictionary {
   nav: {
     chat: string;
     contacts: string;
-    quotes: string;
-    more: string;
+    activity: string;
   };
   chat: {
     placeholder: string;
@@ -15,6 +14,10 @@ export interface Dictionary {
     credits: string;
     newChat: string;
     agentPicker: string;
+    welcome: string;
+    quickQuote: string;
+    quickContact: string;
+    quickVoice: string;
   };
   contacts: {
     title: string;
@@ -33,6 +36,14 @@ export interface Dictionary {
     sent: string;
     accepted: string;
     rejected: string;
+  };
+  activity: {
+    title: string;
+    today: string;
+    empty: string;
+    quoteViewed: string;
+    taskDue: string;
+    waMessage: string;
   };
   common: {
     loading: string;

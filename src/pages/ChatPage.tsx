@@ -1,6 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/lib/store';
 import { apiStream } from '@/lib/api';
+import type { Locale } from '@/i18n/types';
 
 interface Message {
   id: string;
@@ -8,13 +10,31 @@ interface Message {
   content: string;
 }
 
+const LOCALES: { value: Locale; label: string }[] = [
+  { value: 'es-PA', label: 'ES' },
+  { value: 'en-US', label: 'EN' },
+  { value: 'pt-BR', label: 'PT' },
+];
+
 export function ChatPage() {
+  const navigate = useNavigate();
   const dict = useAppStore((s) => s.dict);
   const credits = useAppStore((s) => s.credits);
+  const locale = useAppStore((s) => s.locale);
+  const setLocale = useAppStore((s) => s.setLocale);
+  const setUser = useAppStore((s) => s.setUser);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
+
+  const handleLogout = () => {
+    localStorage.removeItem('kitz-token');
+    localStorage.removeItem('kitz-user');
+    setUser(null);
+    navigate('/login');
+  };
 
   const sendMessage = useCallback(async () => {
     const text = input.trim();
@@ -49,7 +69,7 @@ export function ChatPage() {
       if ((err as Error).name !== 'AbortError') {
         setMessages((prev) =>
           prev.map((m) =>
-            m.id === assistantId ? { ...m, content: `⚠️ ${dict.common.error}` } : m,
+            m.id === assistantId ? { ...m, content: `\u26A0\uFE0F ${dict.common.error}` } : m,
           ),
         );
       }
@@ -57,11 +77,15 @@ export function ChatPage() {
       setIsStreaming(false);
       abortRef.current = null;
     }
-  }, [input, isStreaming, dict.common.error]);
+  }, [input, isStreaming, messages, dict.common.error]);
 
   const stopGeneration = useCallback(() => {
     abortRef.current?.abort();
   }, []);
+
+  const sendQuickAction = (text: string) => {
+    setInput(text);
+  };
 
   return (
     <div className="chat-page">
@@ -70,14 +94,79 @@ export function ChatPage() {
         <span className="chat-credits">
           {credits} {dict.chat.credits}
         </span>
+        <div className="profile-menu-wrapper">
+          <button
+            className="profile-btn"
+            type="button"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label="Profile menu"
+          >
+            <span className="profile-avatar">K</span>
+          </button>
+          {menuOpen && (
+            <div className="profile-dropdown">
+              <div className="locale-switcher-inline">
+                {LOCALES.map((l) => (
+                  <button
+                    key={l.value}
+                    className={`locale-chip${locale === l.value ? ' active' : ''}`}
+                    onClick={() => {
+                      setLocale(l.value);
+                      setMenuOpen(false);
+                    }}
+                    type="button"
+                  >
+                    {l.label}
+                  </button>
+                ))}
+              </div>
+              <button
+                className="dropdown-logout-btn"
+                type="button"
+                onClick={handleLogout}
+              >
+                {dict.auth.logout}
+              </button>
+            </div>
+          )}
+        </div>
       </header>
 
       <div className="chat-messages">
-        {messages.map((msg) => (
-          <div key={msg.id} className={`chat-bubble ${msg.role}`}>
-            {msg.content || '...'}
+        {messages.length === 0 ? (
+          <div className="chat-welcome">
+            <p className="chat-welcome-text">{dict.chat.welcome}</p>
+            <div className="quick-actions">
+              <button
+                className="quick-chip"
+                type="button"
+                onClick={() => sendQuickAction(dict.chat.quickQuote)}
+              >
+                {dict.chat.quickQuote}
+              </button>
+              <button
+                className="quick-chip"
+                type="button"
+                onClick={() => sendQuickAction(dict.chat.quickContact)}
+              >
+                {dict.chat.quickContact}
+              </button>
+              <button
+                className="quick-chip"
+                type="button"
+                onClick={() => sendQuickAction(dict.chat.quickVoice)}
+              >
+                {dict.chat.quickVoice}
+              </button>
+            </div>
           </div>
-        ))}
+        ) : (
+          messages.map((msg) => (
+            <div key={msg.id} className={`chat-bubble ${msg.role}`}>
+              {msg.content || '...'}
+            </div>
+          ))
+        )}
       </div>
 
       <div className="chat-input-area">

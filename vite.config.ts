@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'icons/icon.svg', 'icons/icon-maskable.svg'],
       manifest: {
-        name: 'KitZ',
+        name: 'KitZ Go',
         short_name: 'KitZ',
-        description: 'KitZ — Tu workspace con IA para ventas y operaciones',
+        description: 'KitZ Go — Tu asistente de negocios en tu bolsillo',
         theme_color: '#1A1A1A',
         background_color: '#FDFBF6',
         display: 'standalone',

@@ -7,8 +7,7 @@ import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { AppShell } from '@/components/layout/AppShell';
 import { ChatPage } from '@/pages/ChatPage';
 import { ContactsPage } from '@/pages/ContactsPage';
-import { QuotesPage } from '@/pages/QuotesPage';
-import { MorePage } from '@/pages/MorePage';
+import { ActivityPage } from '@/pages/ActivityPage';
 import { LoginPage } from '@/pages/LoginPage';
 
 const queryClient = new QueryClient({
@@ -82,9 +81,11 @@ export function App() {
             <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
               <Route path="/chat" element={<ChatPage />} />
               <Route path="/contacts" element={<ContactsPage />} />
-              <Route path="/quotes" element={<QuotesPage />} />
-              <Route path="/more" element={<MorePage />} />
+              <Route path="/activity" element={<ActivityPage />} />
             </Route>
+            {/* Legacy redirects */}
+            <Route path="/more" element={<Navigate to="/chat" replace />} />
+            <Route path="/quotes" element={<Navigate to="/activity" replace />} />
             <Route path="*" element={<Navigate to="/chat" replace />} />
           </Routes>
         </BrowserRouter>

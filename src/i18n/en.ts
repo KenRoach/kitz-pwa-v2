@@ -4,8 +4,7 @@ export const en: Dictionary = {
   nav: {
     chat: 'Chat',
     contacts: 'Contacts',
-    quotes: 'Quotes',
-    more: 'More',
+    activity: 'Activity',
   },
   chat: {
     placeholder: 'Type a message...',
@@ -15,6 +14,10 @@ export const en: Dictionary = {
     credits: 'credits',
     newChat: 'New conversation',
     agentPicker: 'Choose agent',
+    welcome: 'Hi, I\'m Kitz. How can I help?',
+    quickQuote: 'Create quote',
+    quickContact: 'Find contact',
+    quickVoice: 'Voice note',
   },
   contacts: {
     title: 'Contacts',
@@ -33,6 +36,14 @@ export const en: Dictionary = {
     sent: 'Sent',
     accepted: 'Accepted',
     rejected: 'Rejected',
+  },
+  activity: {
+    title: 'Activity',
+    today: 'Today',
+    empty: 'No activity yet',
+    quoteViewed: 'Quote viewed by',
+    taskDue: 'Task due',
+    waMessage: 'WhatsApp message',
   },
   common: {
     loading: 'Loading...',

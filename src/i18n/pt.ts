@@ -4,8 +4,7 @@ export const pt: Dictionary = {
   nav: {
     chat: 'Chat',
     contacts: 'Contatos',
-    quotes: 'Orçamentos',
-    more: 'Mais',
+    activity: 'Atividade',
   },
   chat: {
     placeholder: 'Digite uma mensagem...',
@@ -15,6 +14,10 @@ export const pt: Dictionary = {
     credits: 'créditos',
     newChat: 'Nova conversa',
     agentPicker: 'Escolher agente',
+    welcome: 'Oi, sou Kitz. Como posso ajudar?',
+    quickQuote: 'Criar orçamento',
+    quickContact: 'Buscar contato',
+    quickVoice: 'Nota de voz',
   },
   contacts: {
     title: 'Contatos',
@@ -33,6 +36,14 @@ export const pt: Dictionary = {
     sent: 'Enviado',
     accepted: 'Aceito',
     rejected: 'Rejeitado',
+  },
+  activity: {
+    title: 'Atividade',
+    today: 'Hoje',
+    empty: 'Sem atividade ainda',
+    quoteViewed: 'Orçamento visto por',
+    taskDue: 'Tarefa pendente',
+    waMessage: 'Mensagem do WhatsApp',
   },
   common: {
     loading: 'Carregando...',

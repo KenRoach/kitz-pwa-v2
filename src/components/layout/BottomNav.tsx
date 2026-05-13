@@ -5,10 +5,9 @@ export function BottomNav() {
   const dict = useAppStore((s) => s.dict);
 
   const tabs = [
-    { to: '/chat', label: dict.nav.chat, icon: '💬' },
-    { to: '/contacts', label: dict.nav.contacts, icon: '👤' },
-    { to: '/quotes', label: dict.nav.quotes, icon: '📄' },
-    { to: '/more', label: dict.nav.more, icon: '☰' },
+    { to: '/chat', label: dict.nav.chat, icon: '\u{1F4AC}' },
+    { to: '/contacts', label: dict.nav.contacts, icon: '\u{1F464}' },
+    { to: '/activity', label: dict.nav.activity, icon: '\u{1F4CB}' },
   ] as const;
 
   return (
