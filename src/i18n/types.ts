@@ -18,6 +18,12 @@ export interface Dictionary {
     quickQuote: string;
     quickContact: string;
     quickVoice: string;
+    attachFile: string;
+    attachCamera: string;
+    attachVoice: string;
+    recording: string;
+    attachedFile: string;
+    attachedPhoto: string;
   };
   contacts: {
     title: string;

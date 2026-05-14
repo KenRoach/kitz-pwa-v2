@@ -1,12 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Maskable icon: full-bleed background with logo centered in safe zone (inner 80%) -->
   <rect width="512" height="512" fill="#1A1A1A"/>
-  <text
-    x="256"
-    y="370"
-    text-anchor="middle"
-    font-family="'Playfair Display', 'Georgia', 'Times New Roman', serif"
-    font-weight="700"
-    font-size="320"
-    fill="#FFFFFF"
-  >K</text>
+  <!-- Logo scaled to fit within the 80% safe zone (409.6px), centered -->
+  <g transform="translate(156, 126) scale(0.83)">
+    <path d="M 30 35 Q 30 10 55 10 L 170 10 Q 195 10 195 35 L 195 135 Q 195 160 170 160 L 100 160 L 60 190 L 70 160 L 55 160 Q 30 160 30 135 Z" fill="#F9F6EF"/>
+    <text x="113" y="130" font-family="'Playfair Display', 'Bodoni Moda', Didot, Bodoni, Georgia, serif" font-size="130" font-weight="700" fill="#1A1A1A" text-anchor="middle">K</text>
+  </g>
 </svg>

@@ -1,5 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="KitZ">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="KitZ logo">
   <title>KitZ</title>
-  <path d="M 4 5 Q 4 2 7 2 L 22 2 Q 25 2 25 5 L 25 18 Q 25 21 22 21 L 13 21 L 8 25 L 9 21 L 7 21 Q 4 21 4 18 Z" fill="#000000"/>
-  <text x="14.5" y="18" font-family="'Playfair Display', 'Bodoni Moda', Didot, Bodoni, Georgia, serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">K</text>
+  <desc>KitZ brand mark: filled speech bubble with knockout serif capital K.</desc>
+  <path d="M 30 35 Q 30 10 55 10 L 170 10 Q 195 10 195 35 L 195 135 Q 195 160 170 160 L 100 160 L 60 190 L 70 160 L 55 160 Q 30 160 30 135 Z" fill="#000000"/>
+  <text x="113" y="130" font-family="'Playfair Display', 'Bodoni Moda', Didot, Bodoni, Georgia, serif" font-size="130" font-weight="700" fill="#ffffff" text-anchor="middle">K</text>
 </svg>

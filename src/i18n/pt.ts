@@ -18,6 +18,12 @@ export const pt: Dictionary = {
     quickQuote: 'Criar orçamento',
     quickContact: 'Buscar contato',
     quickVoice: 'Nota de voz',
+    attachFile: 'Enviar arquivo',
+    attachCamera: 'Tirar foto',
+    attachVoice: 'Ditado por voz',
+    recording: 'Gravando...',
+    attachedFile: 'Arquivo anexado',
+    attachedPhoto: 'Foto anexada',
   },
   contacts: {
     title: 'Contatos',

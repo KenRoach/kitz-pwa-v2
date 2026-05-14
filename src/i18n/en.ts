@@ -18,6 +18,12 @@ export const en: Dictionary = {
     quickQuote: 'Create quote',
     quickContact: 'Find contact',
     quickVoice: 'Voice note',
+    attachFile: 'Upload file',
+    attachCamera: 'Take photo',
+    attachVoice: 'Voice dictation',
+    recording: 'Recording...',
+    attachedFile: 'File attached',
+    attachedPhoto: 'Photo attached',
   },
   contacts: {
     title: 'Contacts',
